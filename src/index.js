@@ -68,6 +68,7 @@ app.get("/pets/:id", (req, res) => {
     });
   }
 });
+
 app.post("/pets", (req, res) => {
   try {
     const body = req.body;
@@ -84,6 +85,65 @@ app.post("/pets", (req, res) => {
     res.status(201).send({
       ok: true,
       mensagem: "Pet criado com sucesso.",
+      dados: pets,
+    });
+  } catch (error) {
+    res.status(500).send({
+      ok: false,
+      mensagem: "Erro interno do servidor.",
+    });
+  }
+});
+
+app.put("/pets/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nome, raca, idade, nomeDoTutor } = req.body;
+
+    const pet = pets.find((item) => item.id === id);
+
+    if (!pet) {
+      return res.status(404).send({
+        ok: false,
+        mensagem: "Pet não enconstrado.",
+      });
+    }
+
+    pet.nome = nome;
+    pet.raca = raca;
+    pet.idade = idade;
+    pet.nomeDoTutor = nomeDoTutor;
+
+    res.status(200).send({
+      ok: true,
+      mensagem: "Pet atualizado com sucesso.",
+      dados: pets,
+    });
+  } catch (error) {
+    res.status(500).send({
+      ok: false,
+      mensagem: "Erro interno do servidor.",
+    });
+  }
+});
+
+app.delete("/pets/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const petIndex = pets.findIndex((item) => item.id === id);
+    if (petIndex < 0) {
+      return res.status(404).send({
+        ok: false,
+        mensagem: "Pet não encontrado.",
+      });
+    }
+
+    pets.splice(petIndex, 1);
+
+    res.status(200).send({
+      ok: true,
+      mensagem: "Pet excluído com sucesso.",
       dados: pets,
     });
   } catch (error) {
