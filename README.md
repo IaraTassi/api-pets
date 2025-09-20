@@ -78,7 +78,7 @@ Permite criar, listar, atualizar e excluir registros de pets, com validação vi
 
 ---
 
-**Atualizar um Pet**
+### Atualizar um Pet
 
 `PUT /pets/:id`
 
@@ -95,7 +95,7 @@ Permite criar, listar, atualizar e excluir registros de pets, com validação vi
 
 ---
 
-Excluir um Pet
+### Excluir um Pet
 
 `DELETE /pets/:id`
 
@@ -108,10 +108,13 @@ Excluir um Pet
 
 ## 🧪 Testes com Postman
 
-Coleção do Postman disponível em:
-📥 Clique aqui para baixar
+📥 Documentação e testes  
+Coleção do Postman disponível:  
+[Abrir no Postman](https://documenter.getpostman.com/view/26225227/2sB3HtEwkf)
 
-🚀 Deploy
+---
+
+## 🚀 Deploy
 
 O projeto está em produção no Render [API de Pets:](https://api-pets-73w1.onrender.com/pets)
 
@@ -128,5 +131,7 @@ O projeto está em produção no Render [API de Pets:](https://api-pets-73w1.onr
 
 Este projeto está sob a licença MIT.
 Veja o arquivo [LICENSE](https://www.mit-license.org/) para mais detalhes.
+
+## 👩‍💻 Autor(a)
 
 Desenvolvido por Iara Tassi durante o desafio Back-End II.
