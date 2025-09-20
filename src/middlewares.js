@@ -15,7 +15,7 @@ export const validatePetMiddleware = (req, res, next) => {
     if (!nome) {
       return res.status(400).send({
         ok: false,
-        mensagem: "O campo nome não foi encontrado.",
+        mensagem: "O campo nome não foi informado.",
       });
     }
 
