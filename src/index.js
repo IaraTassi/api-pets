@@ -3,28 +3,32 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import { pets } from "./dados.js";
 import { randomUUID } from "crypto";
+import { logRequestMiddleware, validatePetMiddleware } from "./middlewares.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(logRequestMiddleware);
 
 app.get("/pets", (req, res) => {
   try {
     const { nome, raca, idade, nomeDoTutor } = req.query;
 
     let dados = pets;
-    if (nome) dados = dados.filter((item) => item.nome.includes(nome));
+    if (nome !== undefined)
+      dados = dados.filter((item) => item.nome.includes(nome));
 
-    if (raca) dados = dados.filter((item) => item.raca.includes(raca));
+    if (raca !== undefined)
+      dados = dados.filter((item) => item.raca.includes(raca));
 
     if (idade) {
       const idadeNum = Number(idade);
       if (isNaN(idadeNum)) {
         return res.status(400).send({
           ok: false,
-          mansagem: "O parâmetro idade inválido.",
+          mensagem: "O parâmetro idade inválido.",
         });
       }
       dados = dados.filter((item) => item.idade > idadeNum);
@@ -51,9 +55,9 @@ app.get("/pets/:id", (req, res) => {
     const { id } = req.params;
     const pet = pets.find((item) => item.id === id);
     if (!pet) {
-      return res.status(400).send({
+      return res.status(404).send({
         ok: false,
-        mensagem: "Pet não encaontrado.",
+        mensagem: "Pet não encontrado.",
       });
     }
     return res.status(200).send({
@@ -69,7 +73,7 @@ app.get("/pets/:id", (req, res) => {
   }
 });
 
-app.post("/pets", (req, res) => {
+app.post("/pets", validatePetMiddleware, (req, res) => {
   try {
     const body = req.body;
     const novoPet = {
@@ -95,7 +99,7 @@ app.post("/pets", (req, res) => {
   }
 });
 
-app.put("/pets/:id", (req, res) => {
+app.put("/pets/:id", validatePetMiddleware, (req, res) => {
   try {
     const { id } = req.params;
     const { nome, raca, idade, nomeDoTutor } = req.body;
@@ -105,7 +109,7 @@ app.put("/pets/:id", (req, res) => {
     if (!pet) {
       return res.status(404).send({
         ok: false,
-        mensagem: "Pet não enconstrado.",
+        mensagem: "Pet não encontrado.",
       });
     }
 
