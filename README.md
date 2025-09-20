@@ -113,8 +113,7 @@ Coleção do Postman disponível em:
 
 🚀 Deploy
 
-O projeto está em produção no Render:
-https://api-pets.onrender.com
+O projeto está em produção no Render [API de Pets:](https://api-pets-73w1.onrender.com/pets)
 
 ## 📝 Requisitos atendidos
 
